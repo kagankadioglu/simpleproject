@@ -1,0 +1,17 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'docker build -t myproject:latest .'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://kube-api-server-url']) {
+        }
+      }
+    }
+  }
+}
